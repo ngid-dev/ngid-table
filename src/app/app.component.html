@@ -5,4 +5,142 @@
     <em class="fas fa-plus"></em>
     Add
   </button>
+  <br />
+  <br />
+
+  <div class="ngid-table">
+    <div class="ngid-table-header">
+      <div class="input-group input-search">
+        <span class="input-group-text">
+          <em class="fas fa-filter"></em>
+        </span>
+        <span class="input-group-text">
+          <em class="fas fa-search"></em>
+        </span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Username"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+        />
+      </div>
+    </div>
+    <div class="ngid-table-body">
+      <div class="table-responsive">
+        <table class="table ngid-table">
+          <thead>
+            <tr>
+              <th>
+                <div class="th-content">
+                  <span class="th-text"> No </span>
+                  <!-- <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [id]="0"
+                      [indeterminate]="true"
+                    />
+                    <label class="form-check-label" [for]="0"> </label>
+                  </div> -->
+                </div>
+              </th>
+              <th class="sortable sort-asc">
+                <div class="th-content">
+                  <span class="th-text">Full Name</span>
+                  <em class="fas fa-sort"></em>
+                </div>
+              </th>
+              <th class="sortable">
+                <div class="th-content">
+                  <span class="th-text">Username</span>
+                  <em class="fas fa-sort"></em>
+                </div>
+              </th>
+              <th class="sortable">
+                <div class="th-content">
+                  <span class="th-text">Email</span>
+                  <em class="fas fa-sort"></em>
+                </div>
+              </th>
+              <th class="sortable">
+                <div class="th-content">
+                  <span class="th-text">Phone</span>
+                  <em class="fas fa-sort"></em>
+                </div>
+              </th>
+              <th class="th-action">
+                <div class="th-content">
+                  <span class="th-text"> Action </span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of [1, 2, 3, 4]">
+              <td>
+                <div class="td-content">
+                  {{ item }}
+                  <!-- <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [id]="item + 1"
+                    />
+                    <label class="form-check-label" [for]="item + 1"> </label>
+                  </div> -->
+                </div>
+              </td>
+              <td>
+                <div class="td-content">John Doe</div>
+              </td>
+              <td>
+                <div class="td-content">johndoe</div>
+              </td>
+              <td>
+                <div class="td-content">johndoe@gmail.com</div>
+              </td>
+              <td>
+                <div class="td-content">+628123456789</div>
+              </td>
+              <td class="td-action">
+                <div class="td-content">
+                  <button class="btn btn-primary btn-sm">
+                    <em class="fas fa-search"></em>
+                  </button>
+                  <button class="btn btn-warning btn-sm">
+                    <em class="fas fa-pen-alt"></em>
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <em class="fas fa-trash"></em>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ngid-table-footer">
+      <div class="footer-left">
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          style="width: 70px"
+        >
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="25">25</option>
+        </select>
+      </div>
+      <div class="footer-right">
+        <ngb-pagination
+          [collectionSize]="120"
+          [page]="1"
+          [maxSize]="5"
+          [boundaryLinks]="true"
+        ></ngb-pagination>
+      </div>
+    </div>
+  </div>
 </div>

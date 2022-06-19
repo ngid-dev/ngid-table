@@ -1,5 +1,122 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
-@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+div.ngid-table {
+  div.ngid-table-header {
+    display: block;
+    div.input-group {
+      &.input-search {
+        span.input-group-text {
+          background-color: transparent;
+          border-right: unset;
+          em.fas.fa-filter {
+            cursor: pointer;
+            color: #939393;
+            &:hover {
+              color: inherit;
+            }
+          }
+        }
+        input {
+          border-left: unset;
+        }
+      }
+    }
+  }
+  div.ngid-table-body {
+    table.table.ngid-table {
+      thead {
+        tr {
+          th {
+            border-bottom: unset;
+            font-weight: normal;
+            color: #939393;
+            white-space: nowrap;
+            &.th-action {
+              text-align: center;
+              div.th-content {
+                display: block;
+                text-align: center;
+              }
+            }
+            &.sortable {
+              &:hover {
+                background-color: #fafafa;
+                cursor: pointer;
+              }
+              &.sort-asc div.th-content em::after,
+              &.sort-desc div.th-content em::after {
+                font-family: "Font Awesome\ 5 Free";
+                position: absolute;
+                left: 0;
+                top: 0;
+                font-weight: 700;
+                color: #939393;
+              }
+              &.sort-asc {
+                div.th-content {
+                  em {
+                    &::after {
+                      content: "\f0de";
+                    }
+                  }
+                }
+              }
+              &.sort-desc {
+                div.th-content {
+                  em {
+                    &::after {
+                      content: "\f0dd";
+                    }
+                  }
+                }
+              }
+            }
+            div.th-content {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              em {
+                margin-left: 0.4em;
+                color: #e6e6e6;
+                position: relative;
+              }
+            }
+          }
+        }
+      }
+      tbody {
+        border-top: unset;
+        tr {
+          &:nth-child(odd) {
+            background-color: #f8f8f8;
+          }
+          &:hover {
+            background-color: darken(#f8f8f8, 3);
+          }
+          td {
+            border-bottom: unset;
+            &.td-action {
+              text-align: center;
+              white-space: nowrap;
+              button {
+                margin: 0.2rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  div.ngid-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    ul.pagination {
+      margin-bottom: 0 !important;
+    }
+  }
+}

@@ -35,28 +35,14 @@
                   </div> -->
               </div>
             </th>
-            <th class="sortable sort-asc">
+            <!-- <th class="sortable sort-asc"> -->
+            <th
+              [ngClass]="column.sortable !== false ? 'sortable' : ''"
+              *ngFor="let column of model.columns"
+            >
               <div class="th-content">
-                <span class="th-text">Full Name</span>
-                <em class="fas fa-sort"></em>
-              </div>
-            </th>
-            <th class="sortable">
-              <div class="th-content">
-                <span class="th-text">Username</span>
-                <em class="fas fa-sort"></em>
-              </div>
-            </th>
-            <th class="sortable">
-              <div class="th-content">
-                <span class="th-text">Email</span>
-                <em class="fas fa-sort"></em>
-              </div>
-            </th>
-            <th class="sortable">
-              <div class="th-content">
-                <span class="th-text">Phone</span>
-                <em class="fas fa-sort"></em>
+                <span class="th-text">{{ column.header }}</span>
+                <em class="fas fa-sort" *ngIf="column.sortable !== false"></em>
               </div>
             </th>
             <th class="th-action">
@@ -67,10 +53,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of [1, 2, 3, 4]">
+          <tr *ngFor="let record of model.records; let i = index">
             <td>
               <div class="td-content">
-                {{ item }}
+                {{ i + 1 }}
                 <!-- <div class="form-check">
                     <input
                       class="form-check-input"
@@ -81,17 +67,12 @@
                   </div> -->
               </div>
             </td>
-            <td>
-              <div class="td-content">John Doe</div>
-            </td>
-            <td>
-              <div class="td-content">johndoe</div>
-            </td>
-            <td>
-              <div class="td-content">johndoe@gmail.com</div>
-            </td>
-            <td>
-              <div class="td-content">+628123456789</div>
+            <td *ngFor="let column of model.columns">
+              <div class="td-content">
+                <div class="td-text">
+                  {{ record[column.field] }}
+                </div>
+              </div>
             </td>
             <td class="td-action">
               <div class="td-content">

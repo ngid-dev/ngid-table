@@ -53,6 +53,7 @@ export class AppComponent implements OnInit {
       .get<Array<any>>('https://jsonplaceholder.typicode.com/users')
       .subscribe((response: Array<any>) => {
         this.tableModel.setRecords(response);
+        this.tableModel.reload();
       });
   }
 }

@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { TableColumnModel } from './table-column.model';
 export class TableModel<T> {
-  public records: Array<T>;
+  private records: Array<T>;
   public requestReload: EventEmitter<void>;
   constructor(
     public moduleCode: string,
@@ -15,7 +15,7 @@ export class TableModel<T> {
   }
 
   public getRecords(): Array<T> {
-    return Array.from(this.records);
+    return Array.from(this.records || []);
   }
 
   public reload(): void {

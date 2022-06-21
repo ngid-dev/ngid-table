@@ -12,7 +12,5 @@ export class SimplrTableComponent extends BaseTable {
     super('table.simplr', tableService);
   }
 
-  protected onInitTable(): void {
-    console.log(this.state);
-  }
+  protected onInitTable(): void {}
 }

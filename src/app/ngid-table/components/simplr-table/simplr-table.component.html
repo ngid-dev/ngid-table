@@ -37,12 +37,15 @@
             </th>
             <!-- <th class="sortable sort-asc"> -->
             <th
-              [ngClass]="column.sortable !== false ? 'sortable' : ''"
-              *ngFor="let column of model.columns"
+              [ngClass]="column.model.sortable !== false ? 'sortable' : ''"
+              *ngFor="let column of state.columns"
             >
               <div class="th-content">
-                <span class="th-text">{{ column.header }}</span>
-                <em class="fas fa-sort" *ngIf="column.sortable !== false"></em>
+                <span class="th-text">{{ column.model.header }}</span>
+                <em
+                  class="fas fa-sort"
+                  *ngIf="column.model.sortable !== false"
+                ></em>
               </div>
             </th>
             <th class="th-action">
@@ -53,7 +56,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let record of model.records; let i = index">
+          <tr *ngFor="let row of state.rows; let i = index">
             <td>
               <div class="td-content">
                 {{ i + 1 }}
@@ -67,10 +70,10 @@
                   </div> -->
               </div>
             </td>
-            <td *ngFor="let column of model.columns">
+            <td *ngFor="let column of row.columns">
               <div class="td-content">
                 <div class="td-text">
-                  {{ record[column.field] }}
+                  {{ column.value }}
                 </div>
               </div>
             </td>

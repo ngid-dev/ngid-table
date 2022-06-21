@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
-import { BaseTable } from '../../base/base-table';
+import { BaseTable, makeTableProvider } from '../../base/base-table';
+import { NgidTableService } from '../../ngid-table.service';
 
 @Component({
   selector: 'app-table[theme="simplr"],app-table[theme="default"]',
   templateUrl: './simplr-table.component.html',
+  providers: makeTableProvider,
 })
 export class SimplrTableComponent extends BaseTable {
-  constructor() {
-    super('table.simplr');
+  constructor(tableService: NgidTableService) {
+    super('table.simplr', tableService);
   }
 
   protected onInitTable(): void {
-    console.log('INFO: come from onInitTable');
-    console.log(this.model);
+    console.log(this.state);
   }
 }

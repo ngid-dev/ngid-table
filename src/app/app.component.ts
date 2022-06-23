@@ -55,4 +55,19 @@ export class AppComponent implements OnInit {
         this.tableModel.reload();
       });
   }
+
+  public handleView(record: any): void {
+    console.log('INFO: Come from handleView');
+    console.log(record);
+  }
+
+  public handleEdit(record: any): void {
+    console.log('INFO: Come from handleEdit');
+    console.log(record);
+  }
+
+  public handleDelete(record: any): void {
+    console.log('INFO: Come from handleDelete');
+    console.log(record);
+  }
 }

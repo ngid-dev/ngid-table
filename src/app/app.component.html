@@ -8,7 +8,19 @@
   <br />
   <br />
   <!-- <app-table [model]="tableModel"></app-table> -->
-  <app-table theme="simplr" [model]="tableModel"></app-table>
+  <ngid-table [model]="tableModel">
+    <ng-template #actionButtons let-record>
+      <button class="btn btn-primary btn-sm" (click)="handleView(record)">
+        <em class="fas fa-search"></em>
+      </button>
+      <button class="btn btn-warning btn-sm" (click)="handleEdit(record)">
+        <em class="fas fa-pen-alt"></em>
+      </button>
+      <button class="btn btn-danger btn-sm" (click)="handleDelete(record)">
+        <em class="fas fa-trash"></em>
+      </button>
+    </ng-template>
+  </ngid-table>
   <br />
   <br />
 </div>

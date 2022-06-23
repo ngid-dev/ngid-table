@@ -3,7 +3,7 @@ import { BaseTable, makeTableProvider } from '../../base/base-table';
 import { NgidTableService } from '../../ngid-table.service';
 
 @Component({
-  selector: 'app-table[theme="simplr"],app-table[theme="default"]',
+  selector: 'ngid-table[theme="simplr"]',
   templateUrl: './simplr-table.component.html',
   providers: makeTableProvider,
 })

@@ -1,4 +1,12 @@
-import { Component, Inject, Input, OnInit, Provider } from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  Inject,
+  Input,
+  OnInit,
+  Provider,
+  TemplateRef,
+} from '@angular/core';
 import * as tableAction from '../actions/table.action';
 import { Table } from '../domain/table';
 import { TableColumn } from '../domain/table-column';
@@ -12,6 +20,7 @@ export const makeTableProvider: Array<Provider> = [NgidTableService];
 })
 export abstract class BaseTable implements OnInit {
   @Input() model: TableModel<any>;
+  @ContentChild('actionButtons') actionButtonsTmpl: TemplateRef<any>;
   public state: Table;
   protected abstract onInitTable(): void;
   constructor(

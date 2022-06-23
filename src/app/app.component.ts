@@ -37,13 +37,25 @@ export class AppComponent implements OnInit {
         header: 'Phone',
       },
       {
+        field: 'address.street',
+        header: 'Street',
+      },
+      {
+        field: 'address.city',
+        header: 'City',
+      },
+      {
+        field: 'address.zipcode',
+        header: 'Zipcode',
+      },
+      {
         field: 'website',
         header: 'Website',
       },
-      // {
-      //   field: 'company.name',
-      //   header: 'Company Name',
-      // },
+      {
+        field: 'company.name',
+        header: 'Company Name',
+      },
     ]);
   }
 

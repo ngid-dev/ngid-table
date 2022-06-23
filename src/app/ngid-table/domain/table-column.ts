@@ -8,7 +8,20 @@ export class TableColumn {
   public static create(model: TableColumnModel, record: any): TableColumn {
     const tableColumn = new TableColumn(model);
     tableColumn.sortable = model.sortable !== false;
-    tableColumn.value = record ? record[model.field] : null;
+    tableColumn.value = record ? this.resolveRecord(record, model.field) : null;
     return tableColumn;
+  }
+
+  private static resolveRecord(record: any, field: string): string {
+    let value = { ...(record || {}) };
+    const fieldSplit = field.split('.');
+    while (fieldSplit.length > 0) {
+      const firstSplit = fieldSplit.shift() as string;
+      value = value[firstSplit];
+      if (!value) {
+        fieldSplit.splice(0);
+      }
+    }
+    return value;
   }
 }

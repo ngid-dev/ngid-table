@@ -1,4 +1,5 @@
 import { TableModel } from '../model/table.model';
+import { TableOrderType } from '../type/table-order.type';
 import { TableColumn } from './table-column';
 import { TableRow } from './table-row';
 
@@ -9,6 +10,8 @@ export class Table {
   public keywords: string;
   public perPage: number;
   public perPages: Array<number>;
+  public sortField: string | null;
+  public sortOrder: TableOrderType;
   constructor(public model: TableModel<any>) {}
 
   public setStateLoading(): void {

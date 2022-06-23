@@ -1,6 +1,7 @@
 import { Table } from '../domain/table';
 import { TableColumn } from '../domain/table-column';
 import { TableRow } from '../domain/table-row';
+import { TableOrderType } from '../type/table-order.type';
 
 export const resolveTableRows = (state: Table): Array<TableRow> => {
   if (state.model.getRecords().length === 0) return [];
@@ -8,6 +9,8 @@ export const resolveTableRows = (state: Table): Array<TableRow> => {
   let records = state.model.getRecords();
 
   records = searchRecordByKeywords(records, state.columns, state.keywords);
+
+  records = orderRecords(records, state.sortField, state.sortOrder);
 
   records = records.splice(0, state.perPage);
 
@@ -32,5 +35,19 @@ const searchRecordByKeywords = (
       }
     });
     return isMatch;
+  });
+};
+
+const orderRecords = (
+  records: Array<any>,
+  sortField: string | null,
+  orderBy: TableOrderType
+): Array<any> => {
+  if (!sortField) return records;
+  return records.sort((recordA, recordB) => {
+    const valueA = recordA[sortField];
+    const valueB = recordB[sortField];
+    if (valueA < valueB) return orderBy === 'ASC' ? -1 : +1;
+    return orderBy === 'ASC' ? +1 : -1;
   });
 };

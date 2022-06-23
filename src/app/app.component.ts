@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
       {
         field: 'email',
         header: 'Email',
-        sortable: false,
       },
       {
         field: 'phone',

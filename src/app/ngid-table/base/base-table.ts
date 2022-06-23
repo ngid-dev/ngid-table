@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit, Provider } from '@angular/core';
 import * as tableAction from '../actions/table.action';
 import { Table } from '../domain/table';
+import { TableColumn } from '../domain/table-column';
 import { TableModel } from '../model/table.model';
 import { NgidTableService } from '../ngid-table.service';
 
@@ -49,5 +50,9 @@ export abstract class BaseTable implements OnInit {
     const selectElement = event.target as HTMLSelectElement;
     const perPage = +selectElement.value;
     this.tableService.dispatch(new tableAction.ChangeMaxRowTable({ perPage }));
+  }
+
+  public handleSort(column: TableColumn): void {
+    this.tableService.dispatch(new tableAction.SortTable({ column }));
   }
 }

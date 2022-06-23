@@ -3,6 +3,7 @@ import { changePerPageTableAction } from './change-per-page-table.action';
 import { initTableAction } from './init-table.action';
 import { reloadTableAction } from './reload-table.action';
 import { searchTableAction } from './search-table.action';
+import { sortTable } from './sort-table.action';
 import * as tableAction from './table.action';
 
 export const dispatchTableAction = (
@@ -21,6 +22,9 @@ export const dispatchTableAction = (
       break;
     case tableAction.CHANGE_PER_PAGE_TABLE:
       changePerPageTableAction(state, action.payload);
+      break;
+    case tableAction.SORT_TABLE:
+      sortTable(state, action.payload);
       break;
     default:
       break;

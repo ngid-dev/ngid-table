@@ -38,15 +38,18 @@
             </th>
             <!-- <th class="sortable sort-asc"> -->
             <th
-              [ngClass]="column.model.sortable !== false ? 'sortable' : ''"
+              [ngClass]="[
+                column.sortable ? 'sortable' : '',
+                state.sortField === column.model.field && state.sortOrder
+                  ? 'sort-' + (state.sortOrder | lowercase)
+                  : ''
+              ]"
               *ngFor="let column of state.columns"
+              (click)="column.sortable && handleSort(column)"
             >
               <div class="th-content">
                 <span class="th-text">{{ column.model.header }}</span>
-                <em
-                  class="fas fa-sort"
-                  *ngIf="column.model.sortable !== false"
-                ></em>
+                <em class="fas fa-sort" *ngIf="column.sortable"></em>
               </div>
             </th>
             <th class="th-action">

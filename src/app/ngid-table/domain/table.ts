@@ -6,6 +6,7 @@ export class Table {
   public rows: Array<TableRow>;
   public columns: Array<TableColumn>;
   public isLoading: boolean;
+  public keywords: string;
   constructor(public model: TableModel<any>) {}
 
   public setStateLoading(): void {

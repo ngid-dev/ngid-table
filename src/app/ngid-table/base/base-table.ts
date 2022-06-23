@@ -38,4 +38,10 @@ export abstract class BaseTable implements OnInit {
       this.tableService.dispatch(new tableAction.ReloadTable());
     });
   }
+
+  public handleSearch(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const keywords = inputElement.value;
+    this.tableService.dispatch(new tableAction.SearchTable({ keywords }));
+  }
 }

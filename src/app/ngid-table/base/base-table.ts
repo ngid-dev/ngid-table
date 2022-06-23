@@ -44,4 +44,10 @@ export abstract class BaseTable implements OnInit {
     const keywords = inputElement.value;
     this.tableService.dispatch(new tableAction.SearchTable({ keywords }));
   }
+
+  public handleChangePerPage(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const perPage = +selectElement.value;
+    this.tableService.dispatch(new tableAction.ChangeMaxRowTable({ perPage }));
+  }
 }

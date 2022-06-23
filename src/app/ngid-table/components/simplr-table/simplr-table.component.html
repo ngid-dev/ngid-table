@@ -102,10 +102,15 @@
         class="form-select"
         aria-label="Default select example"
         style="width: 70px"
+        (change)="handleChangePerPage($event)"
       >
-        <option value="5">5</option>
-        <option value="10" selected>10</option>
-        <option value="25">25</option>
+        <option
+          [value]="perPage"
+          *ngFor="let perPage of state.perPages"
+          [selected]="perPage === state.perPage"
+        >
+          {{ perPage }}
+        </option>
       </select>
     </div>
     <div class="footer-right">

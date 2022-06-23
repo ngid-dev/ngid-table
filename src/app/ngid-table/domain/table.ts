@@ -7,6 +7,8 @@ export class Table {
   public columns: Array<TableColumn>;
   public isLoading: boolean;
   public keywords: string;
+  public perPage: number;
+  public perPages: Array<number>;
   constructor(public model: TableModel<any>) {}
 
   public setStateLoading(): void {
@@ -24,6 +26,8 @@ export class Table {
   public static create(model: TableModel<any>): Table {
     const table = new Table(model);
     table.rows = new Array();
+    table.perPage = 5;
+    table.perPages = [5, 10, 25];
     table.columns = model.columns.map((column) =>
       TableColumn.create(column, null)
     );

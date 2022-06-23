@@ -9,6 +9,8 @@ export const resolveTableRows = (state: Table): Array<TableRow> => {
 
   records = searchRecordByKeywords(records, state.columns, state.keywords);
 
+  records = records.splice(0, state.perPage);
+
   return records.map((record) =>
     TableRow.create({ record: record, columns: state.model.columns })
   );

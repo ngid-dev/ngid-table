@@ -1,4 +1,5 @@
 import { Table } from '../domain/table';
+import { changePerPageTableAction } from './change-per-page-table.action';
 import { initTableAction } from './init-table.action';
 import { reloadTableAction } from './reload-table.action';
 import { searchTableAction } from './search-table.action';
@@ -17,6 +18,9 @@ export const dispatchTableAction = (
       break;
     case tableAction.SEARCH_TABLE:
       searchTableAction(state, action.payload);
+      break;
+    case tableAction.CHANGE_PER_PAGE_TABLE:
+      changePerPageTableAction(state, action.payload);
       break;
     default:
       break;

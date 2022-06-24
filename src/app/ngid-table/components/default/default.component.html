@@ -21,8 +21,12 @@
     <div class="table-responsive">
       <table class="table ngid-table">
         <thead>
-          <tr>
-            <th>
+          <tr *ngFor="let column of state.columnsList; let i = index">
+            <th
+              class="th-no"
+              [attr.rowspan]="state.columnsList.length"
+              *ngIf="i === 0"
+            >
               <div class="th-content">
                 <span class="th-text"> No </span>
                 <!-- <div class="form-check">
@@ -39,20 +43,34 @@
             <!-- <th class="sortable sort-asc"> -->
             <th
               [ngClass]="[
-                column.sortable ? 'sortable' : '',
-                state.sortField === column.model.field && state.sortOrder
+                c.sortable && !c.model.childrens ? 'sortable' : '',
+                state.sortField === c.model.field && state.sortOrder
                   ? 'sort-' + (state.sortOrder | lowercase)
                   : ''
               ]"
-              *ngFor="let column of state.columns"
-              (click)="column.sortable && handleSort(column)"
+              *ngFor="let c of column"
+              (click)="handleSort(c)"
+              [attr.colspan]="c.model.childrens ? c.model.childrens.length : 1"
+              [attr.rowspan]="
+                c.model.childrens ? 1 : state.columnsList.length - i
+              "
             >
-              <div class="th-content">
-                <span class="th-text">{{ column.model.header }}</span>
-                <em class="fas fa-sort" *ngIf="column.sortable"></em>
+              <div
+                class="th-content"
+                [ngClass]="c.model.childrens ? 'justify-content-center' : ''"
+              >
+                <span class="th-text">{{ c.model.header }}</span>
+                <em
+                  class="fas fa-sort"
+                  *ngIf="c.sortable && !c.model.childrens"
+                ></em>
               </div>
             </th>
-            <th class="th-action" *ngIf="actionButtonsTmpl">
+            <th
+              class="th-action"
+              *ngIf="actionButtonsTmpl && i === 0"
+              [attr.rowspan]="state.columnsList.length"
+            >
               <div class="th-content">
                 <span class="th-text"> Action </span>
               </div>

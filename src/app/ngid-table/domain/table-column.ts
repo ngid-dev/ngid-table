@@ -8,11 +8,12 @@ export class TableColumn {
   public static create(model: TableColumnModel, record: any): TableColumn {
     const tableColumn = new TableColumn(model);
     tableColumn.sortable = model.sortable !== false;
-    tableColumn.value = record ? this.resolveRecord(record, model.field) : null;
+    tableColumn.value =
+      record && model.field ? this.resolveRecord(record, model.field) : null;
     return tableColumn;
   }
 
-  private static resolveRecord(record: any, field: string): string {
+  public static resolveRecord(record: any, field: string): string {
     let value = { ...(record || {}) };
     const fieldSplit = field.split('.');
     while (fieldSplit.length > 0) {

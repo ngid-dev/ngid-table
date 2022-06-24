@@ -1,5 +1,5 @@
 export class TableColumnModel {
-  field: string;
+  field?: string;
   header: string;
   childrens?: Array<TableColumnModel>;
   sortable?: boolean;

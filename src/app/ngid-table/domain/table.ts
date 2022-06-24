@@ -1,3 +1,4 @@
+import { TableColumnModel } from '../model/table-column.model';
 import { TableModel } from '../model/table.model';
 import { TableOrderType } from '../type/table-order.type';
 import { TableColumn } from './table-column';
@@ -5,12 +6,13 @@ import { TableRow } from './table-row';
 
 export class Table {
   public rows: Array<TableRow>;
-  public columns: Array<TableColumn>;
+  public columnsList: Array<Array<TableColumn>>;
+  public columnsModel: Array<TableColumnModel>;
   public isLoading: boolean;
   public keywords: string;
   public perPage: number;
   public perPages: Array<number>;
-  public sortField: string | null;
+  public sortField: string | null | undefined;
   public sortOrder: TableOrderType;
   constructor(public model: TableModel<any>) {}
 
@@ -31,9 +33,36 @@ export class Table {
     table.rows = new Array();
     table.perPage = 5;
     table.perPages = [5, 10, 25];
-    table.columns = model.columns.map((column) =>
-      TableColumn.create(column, null)
-    );
+    table.columnsList = this.createColumnsList(model.columns, [], 0);
+    table.columnsModel = this.createColumnsModel(model.columns, []);
+
     return table;
+  }
+
+  public static createColumnsList(
+    columns: Array<TableColumnModel>,
+    results: Array<Array<TableColumn>>,
+    index: number
+  ): Array<Array<TableColumn>> {
+    if (!results[index]) results.push([]);
+    columns.forEach((column) => {
+      results[index].push(TableColumn.create(column, null));
+      if (column.childrens) {
+        this.createColumnsList(column.childrens, results, index + 1);
+      }
+    });
+    return results;
+  }
+
+  public static createColumnsModel(
+    columns: Array<TableColumnModel>,
+    result: Array<TableColumnModel>
+  ): Array<TableColumnModel> {
+    columns.forEach((column) => {
+      column.childrens
+        ? this.createColumnsModel(column.childrens, result)
+        : result.push(column);
+    });
+    return result;
   }
 }

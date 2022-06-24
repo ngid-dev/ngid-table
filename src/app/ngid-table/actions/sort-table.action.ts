@@ -7,20 +7,22 @@ export const sortTable = (
   state: Table,
   payload: { column: TableColumn }
 ): void => {
-  const { field } = payload.column.model;
-  const sortOrder: TableOrderType = state.sortField
-    ? state.sortField === field
-      ? state.sortOrder === 'DESC'
-        ? null
-        : 'DESC'
-      : 'ASC'
-    : 'ASC';
+  if (payload.column.sortable && !payload.column.model.childrens) {
+    const { field } = payload.column.model;
+    const sortOrder: TableOrderType = state.sortField
+      ? state.sortField === field
+        ? state.sortOrder === 'DESC'
+          ? null
+          : 'DESC'
+        : 'ASC'
+      : 'ASC';
 
-  const sortField = sortOrder ? field : null;
-  state.sortField = sortField;
-  state.sortOrder = sortOrder;
+    const sortField = sortOrder ? field : null;
+    state.sortField = sortField;
+    state.sortOrder = sortOrder;
 
-  const rows = resolveTableRows(state);
-  state.setRows(rows);
+    const rows = resolveTableRows(state);
+    state.setRows(rows);
+  }
   state.setStateReady();
 };

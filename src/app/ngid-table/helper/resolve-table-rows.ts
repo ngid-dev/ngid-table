@@ -1,6 +1,7 @@
 import { Table } from '../domain/table';
 import { TableColumn } from '../domain/table-column';
 import { TableRow } from '../domain/table-row';
+import { TableColumnModel } from '../model/table-column.model';
 import { TableOrderType } from '../type/table-order.type';
 
 export const resolveTableRows = (state: Table): Array<TableRow> => {
@@ -8,20 +9,20 @@ export const resolveTableRows = (state: Table): Array<TableRow> => {
 
   let records = state.model.getRecords();
 
-  records = searchRecordByKeywords(records, state.columns, state.keywords);
+  records = searchRecordByKeywords(records, state.columnsModel, state.keywords);
 
   records = orderRecords(records, state.sortField, state.sortOrder);
 
   records = records.splice(0, state.perPage);
 
   return records.map((record) =>
-    TableRow.create({ record: record, columns: state.model.columns })
+    TableRow.create({ record: record, columns: state.columnsModel })
   );
 };
 
 const searchRecordByKeywords = (
   records: Array<any>,
-  columns: Array<TableColumn>,
+  columns: Array<TableColumnModel>,
   keywords: string
 ): Array<any> => {
   if (!keywords) return records;
@@ -29,8 +30,11 @@ const searchRecordByKeywords = (
     let isMatch = false;
     columns.forEach((column) => {
       if (isMatch) return;
-      const value: string = record[column.model.field].toLowerCase();
-      if (value.includes(keywords.toLowerCase())) {
+      const value: string = TableColumn.resolveRecord(
+        record,
+        column.field as string
+      );
+      if (value && value.toLowerCase().includes(keywords.toLowerCase())) {
         isMatch = true;
       }
     });
@@ -40,14 +44,17 @@ const searchRecordByKeywords = (
 
 const orderRecords = (
   records: Array<any>,
-  sortField: string | null,
+  sortField: string | null | undefined,
   orderBy: TableOrderType
 ): Array<any> => {
   if (!sortField) return records;
   return records.sort((recordA, recordB) => {
-    const valueA = recordA[sortField];
-    const valueB = recordB[sortField];
-    if (valueA < valueB) return orderBy === 'ASC' ? -1 : +1;
-    return orderBy === 'ASC' ? +1 : -1;
+    const valueA = TableColumn.resolveRecord(recordA, sortField);
+    const valueB = TableColumn.resolveRecord(recordB, sortField);
+    if (valueA && valueB) {
+      if (valueA < valueB) return orderBy === 'ASC' ? -1 : +1;
+      return orderBy === 'ASC' ? +1 : -1;
+    }
+    return 0;
   });
 };

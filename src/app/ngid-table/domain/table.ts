@@ -2,6 +2,7 @@ import { TableColumnModel } from '../model/table-column.model';
 import { TableModel } from '../model/table.model';
 import { TableOrderType } from '../type/table-order.type';
 import { TableColumn } from './table-column';
+import { TablePagination } from './table-pagination';
 import { TableRow } from './table-row';
 
 export class Table {
@@ -10,10 +11,10 @@ export class Table {
   public columnsModel: Array<TableColumnModel>;
   public isLoading: boolean;
   public keywords: string;
-  public perPage: number;
   public perPages: Array<number>;
   public sortField: string | null | undefined;
   public sortOrder: TableOrderType;
+  public pagination: TablePagination;
   constructor(public model: TableModel<any>) {}
 
   public setStateLoading(): void {
@@ -31,11 +32,10 @@ export class Table {
   public static create(model: TableModel<any>): Table {
     const table = new Table(model);
     table.rows = new Array();
-    table.perPage = 5;
     table.perPages = [5, 10, 25];
     table.columnsList = this.createColumnsList(model.columns, [], 0);
     table.columnsModel = this.createColumnsModel(model.columns, []);
-
+    table.pagination = TablePagination.create(model.pagination);
     return table;
   }
 

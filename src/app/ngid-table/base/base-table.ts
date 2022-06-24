@@ -64,4 +64,8 @@ export abstract class BaseTable implements OnInit {
   public handleSort(column: TableColumn): void {
     this.tableService.dispatch(new tableAction.SortTable({ column }));
   }
+
+  public handleChangePage(page: number): void {
+    this.tableService.dispatch(new tableAction.ChangePageTable({ page }));
+  }
 }

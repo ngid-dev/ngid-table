@@ -1,4 +1,5 @@
 import { Table } from '../domain/table';
+import { changePageTableAction } from './change-page-table.action';
 import { changePerPageTableAction } from './change-per-page-table.action';
 import { initTableAction } from './init-table.action';
 import { reloadTableAction } from './reload-table.action';
@@ -25,6 +26,9 @@ export const dispatchTableAction = (
       break;
     case tableAction.SORT_TABLE:
       sortTable(state, action.payload);
+      break;
+    case tableAction.CHANGE_PAGE_TABLE:
+      changePageTableAction(state, action.payload);
       break;
     default:
       break;

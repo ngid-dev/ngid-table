@@ -1,11 +1,11 @@
 import { Table } from '../domain/table';
 import { resolveTableRows } from '../helper/resolve-table-rows';
 
-export const changePerPageTableAction = (
+export const changePageTableAction = (
   state: Table,
-  payload: { perPage: number }
+  payload: { page: number }
 ): void => {
-  state.pagination.setPerPage(payload.perPage);
+  state.pagination.setPage(payload.page);
   const rows = resolveTableRows(state);
   state.setRows(rows);
   state.setStateReady();

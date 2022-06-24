@@ -13,10 +13,20 @@ export const resolveTableRows = (state: Table): Array<TableRow> => {
 
   records = orderRecords(records, state.sortField, state.sortOrder);
 
-  records = records.splice(0, state.perPage);
+  state.pagination.setTotalRecords(records.length);
 
-  return records.map((record) =>
-    TableRow.create({ record: record, columns: state.columnsModel })
+  const { perPage, page } = state.pagination;
+
+  const startRow = (page - 1) * perPage;
+  const endRow = page * perPage;
+
+  records = records.splice(startRow, endRow);
+
+  return records.map((record, index: number) =>
+    TableRow.create(
+      { record: record, columns: state.columnsModel },
+      index + 1 + startRow
+    )
   );
 };
 

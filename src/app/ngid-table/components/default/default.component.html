@@ -81,7 +81,7 @@
           <tr *ngFor="let row of state.rows; let i = index">
             <td>
               <div class="td-content">
-                {{ i + 1 }}
+                {{ row.position }}
                 <!-- <div class="form-check">
                     <input
                       class="form-check-input"
@@ -125,7 +125,7 @@
         <option
           [value]="perPage"
           *ngFor="let perPage of state.perPages"
-          [selected]="perPage === state.perPage"
+          [selected]="perPage === state.pagination.perPage"
         >
           {{ perPage }}
         </option>
@@ -133,10 +133,11 @@
     </div>
     <div class="footer-right">
       <ngb-pagination
-        [collectionSize]="120"
-        [page]="1"
-        [maxSize]="5"
+        [collectionSize]="state.pagination.totalRecord"
+        [page]="state.pagination.page"
+        [pageSize]="state.pagination.perPage"
         [boundaryLinks]="true"
+        (pageChange)="handleChangePage($event)"
       ></ngb-pagination>
     </div>
   </div>

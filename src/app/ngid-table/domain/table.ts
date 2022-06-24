@@ -15,7 +15,8 @@ export class Table {
   public sortField: string | null | undefined;
   public sortOrder: TableOrderType;
   public pagination: TablePagination;
-  constructor(public model: TableModel<any>) {}
+  public isServerSide: boolean;
+  constructor(public model: TableModel<any>, public stringUrl: string) {}
 
   public setStateLoading(): void {
     this.isLoading = true;
@@ -29,10 +30,11 @@ export class Table {
     this.rows = rows;
   }
 
-  public static create(model: TableModel<any>): Table {
-    const table = new Table(model);
+  public static create(model: TableModel<any>, stringUrl: string): Table {
+    const table = new Table(model, stringUrl);
     table.rows = new Array();
     table.perPages = [5, 10, 25];
+    table.isServerSide = !!stringUrl;
     table.columnsList = this.createColumnsList(model.columns, [], 0);
     table.columnsModel = this.createColumnsModel(model.columns, []);
     table.pagination = TablePagination.create(model.pagination);

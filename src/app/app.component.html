@@ -8,7 +8,10 @@
   <br />
   <br />
   <!-- <app-table [model]="tableModel"></app-table> -->
-  <ngid-table [model]="tableModel">
+  <ngid-table
+    [model]="tableModel"
+    stringUrl="https://jsonplaceholder.typicode.com/users"
+  >
     <ng-template #actionButtons let-record>
       <button class="btn btn-primary btn-sm" (click)="handleView(record)">
         <em class="fas fa-search"></em>

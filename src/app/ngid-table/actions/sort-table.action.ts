@@ -21,8 +21,11 @@ export const sortTable = (
     state.sortField = sortField;
     state.sortOrder = sortOrder;
 
-    const rows = resolveTableRows(state);
-    state.setRows(rows);
+    resolveTableRows(state).then((rows) => {
+      state.setRows(rows);
+      state.setStateReady();
+    });
+  } else {
+    state.setStateReady();
   }
-  state.setStateReady();
 };

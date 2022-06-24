@@ -6,7 +6,8 @@ export const changePageTableAction = (
   payload: { page: number }
 ): void => {
   state.pagination.setPage(payload.page);
-  const rows = resolveTableRows(state);
-  state.setRows(rows);
-  state.setStateReady();
+  resolveTableRows(state).then((rows) => {
+    state.setRows(rows);
+    state.setStateReady();
+  });
 };

@@ -6,7 +6,8 @@ export const changePerPageTableAction = (
   payload: { perPage: number }
 ): void => {
   state.pagination.setPerPage(payload.perPage);
-  const rows = resolveTableRows(state);
-  state.setRows(rows);
-  state.setStateReady();
+  resolveTableRows(state).then((rows) => {
+    state.setRows(rows);
+    state.setStateReady();
+  });
 };

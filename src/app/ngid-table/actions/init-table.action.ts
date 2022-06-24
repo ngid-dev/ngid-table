@@ -2,7 +2,8 @@ import { Table } from '../domain/table';
 import { resolveTableRows } from '../helper/resolve-table-rows';
 
 export const initTableAction = (state: Table): void => {
-  const rows = resolveTableRows(state);
-  state.setRows(rows);
-  state.setStateReady();
+  resolveTableRows(state).then((rows) => {
+    state.setRows(rows);
+    state.setStateReady();
+  });
 };

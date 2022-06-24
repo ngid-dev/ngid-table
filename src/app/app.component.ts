@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildTableModel();
-    this.setTableRecords();
   }
 
   private buildTableModel(): void {
@@ -71,15 +70,6 @@ export class AppComponent implements OnInit {
         ],
       },
     ]);
-  }
-
-  private setTableRecords(): void {
-    this.httpClient
-      .get<Array<any>>('https://jsonplaceholder.typicode.com/users')
-      .subscribe((response: Array<any>) => {
-        this.tableModel.setRecords(response);
-        this.tableModel.reload();
-      });
   }
 
   public handleView(record: any): void {

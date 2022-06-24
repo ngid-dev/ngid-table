@@ -4,8 +4,8 @@ import { Table } from './domain/table';
 import { TableModel } from './model/table.model';
 export class NgidTableService {
   private state: Table;
-  public setState(model: TableModel<any>): Table {
-    this.state = Table.create(model);
+  public setState(model: TableModel<any>, stringUrl: string): Table {
+    this.state = Table.create(model, stringUrl);
     return this.state;
   }
 

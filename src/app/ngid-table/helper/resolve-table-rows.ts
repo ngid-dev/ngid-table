@@ -1,33 +1,52 @@
+import { HttpClient } from '@angular/common/http';
+import { Service } from 'src/app/service';
 import { Table } from '../domain/table';
 import { TableColumn } from '../domain/table-column';
 import { TableRow } from '../domain/table-row';
 import { TableColumnModel } from '../model/table-column.model';
 import { TableOrderType } from '../type/table-order.type';
 
-export const resolveTableRows = (state: Table): Array<TableRow> => {
-  if (state.model.getRecords().length === 0) return [];
+export const resolveTableRows = (state: Table): Promise<Array<TableRow>> => {
+  return new Promise((resolve) => {
+    if (state.isServerSide) {
+      const httpClient = Service.injector.get(HttpClient);
+      const { page, perPage } = state.pagination;
+      httpClient
+        .get<Array<any>>(`${state.stringUrl}?_page=${page}&_limit=${perPage}`)
+        .subscribe({
+          next: (response: Array<any>) => {
+            state.pagination.setTotalRecords(10);
+            resolve(resolveRows(state, response));
+          },
+          error: () => {
+            resolve([]);
+          },
+        });
+    } else {
+      if (state.model.getRecords().length === 0) return resolve([]);
 
-  let records = state.model.getRecords();
+      let records = state.model.getRecords();
 
-  records = searchRecordByKeywords(records, state.columnsModel, state.keywords);
+      records = searchRecordByKeywords(
+        records,
+        state.columnsModel,
+        state.keywords
+      );
 
-  records = orderRecords(records, state.sortField, state.sortOrder);
+      records = orderRecords(records, state.sortField, state.sortOrder);
 
-  state.pagination.setTotalRecords(records.length);
+      state.pagination.setTotalRecords(records.length);
 
-  const { perPage, page } = state.pagination;
+      const { perPage, page } = state.pagination;
 
-  const startRow = (page - 1) * perPage;
-  const endRow = page * perPage;
+      const startRow = (page - 1) * perPage;
+      const endRow = page * perPage;
 
-  records = records.splice(startRow, endRow);
+      records = records.splice(startRow, endRow);
 
-  return records.map((record, index: number) =>
-    TableRow.create(
-      { record: record, columns: state.columnsModel },
-      index + 1 + startRow
-    )
-  );
+      resolve(resolveRows(state, records));
+    }
+  });
 };
 
 const searchRecordByKeywords = (
@@ -67,4 +86,14 @@ const orderRecords = (
     }
     return 0;
   });
+};
+
+const resolveRows = (state: Table, records: Array<any>): Array<TableRow> => {
+  const startRow = (state.pagination.page - 1) * state.pagination.perPage;
+  return records.map((record, index: number) =>
+    TableRow.create(
+      { record: record, columns: state.columnsModel },
+      index + 1 + startRow
+    )
+  );
 };

@@ -20,6 +20,7 @@ export const makeTableProvider: Array<Provider> = [NgidTableService];
 })
 export abstract class BaseTable implements OnInit {
   @Input() model: TableModel<any>;
+  @Input() stringUrl: string;
   @ContentChild('actionButtons') actionButtonsTmpl: TemplateRef<any>;
   public state: Table;
   protected abstract onInitTable(): void;
@@ -36,7 +37,7 @@ export abstract class BaseTable implements OnInit {
   }
 
   private setInitializationState(): void {
-    this.state = this.tableService.setState(this.model);
+    this.state = this.tableService.setState(this.model, this.stringUrl);
   }
 
   private initTable(): void {

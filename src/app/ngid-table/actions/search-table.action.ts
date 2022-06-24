@@ -6,7 +6,8 @@ export const searchTableAction = (
   payload: { keywords: string }
 ): void => {
   state.keywords = payload.keywords;
-  const rows = resolveTableRows(state);
-  state.setRows(rows);
-  state.setStateReady();
+  resolveTableRows(state).then((rows) => {
+    state.setRows(rows);
+    state.setStateReady();
+  });
 };

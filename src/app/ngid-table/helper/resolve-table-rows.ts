@@ -11,17 +11,26 @@ export const resolveTableRows = (state: Table): Promise<Array<TableRow>> => {
     if (state.isServerSide) {
       const httpClient = Service.injector.get(HttpClient);
       const { page, perPage } = state.pagination;
-      httpClient
-        .get<Array<any>>(`${state.stringUrl}?_page=${page}&_limit=${perPage}`)
-        .subscribe({
-          next: (response: Array<any>) => {
-            state.pagination.setTotalRecords(10);
-            resolve(resolveRows(state, response));
-          },
-          error: () => {
-            resolve([]);
-          },
-        });
+      let query = `_page=${page}&_limit=${perPage}`;
+      if (state.keywords) {
+        query += `&q=${state.keywords}`;
+      }
+
+      if (state.sortField) {
+        query += `&_sort=${
+          state.sortField
+        }&_order=${state.sortOrder?.toLowerCase()}`;
+      }
+
+      httpClient.get<Array<any>>(`${state.stringUrl}?${query}`).subscribe({
+        next: (response: Array<any>) => {
+          state.pagination.setTotalRecords(10);
+          resolve(resolveRows(state, response));
+        },
+        error: () => {
+          resolve([]);
+        },
+      });
     } else {
       if (state.model.getRecords().length === 0) return resolve([]);
 

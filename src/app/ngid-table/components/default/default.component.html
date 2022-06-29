@@ -117,11 +117,7 @@
               </div>
             </td>
             <td *ngFor="let column of row.columns">
-              <div class="td-content">
-                <div class="td-text">
-                  {{ column.value }}
-                </div>
-              </div>
+              <div class="td-content" tdContent [column]="column"></div>
             </td>
             <td class="td-action" *ngIf="actionButtonsTmpl">
               <div class="td-content">

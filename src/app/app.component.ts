@@ -36,6 +36,10 @@ export class AppComponent implements OnInit {
         header: 'Phone',
       },
       {
+        field: 'example',
+        header: 'Example',
+      },
+      {
         header: 'Address',
         childrens: [
           {

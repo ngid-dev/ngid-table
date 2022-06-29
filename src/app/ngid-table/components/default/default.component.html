@@ -18,6 +18,14 @@
     </div>
   </div>
   <div class="ngid-table-body">
+    <div class="ngid-loader" *ngIf="state.isLoading">
+      <div class="loadingio-spinner-ripple-ccobe1g0m4w">
+        <div class="ldio-h748mykorlm">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table ngid-table">
         <thead>
@@ -78,6 +86,18 @@
           </tr>
         </thead>
         <tbody>
+          <!-- <tr class="tr-loader">
+            <td colspan="9999">
+              <div class="ngid-loader">
+                <div class="loadingio-spinner-ripple-ccobe1g0m4w">
+                  <div class="ldio-h748mykorlm">
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr> -->
           <tr *ngFor="let row of state.rows; let i = index">
             <td>
               <div class="td-content">

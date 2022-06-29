@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CustomComponent } from './custom-component';
 import { TableModel } from './ngid-table/model/table.model';
 
 @Component({
@@ -22,10 +23,12 @@ export class AppComponent implements OnInit {
       {
         field: 'name',
         header: 'Name',
+        component: CustomComponent,
       },
       {
         field: 'username',
         header: 'Username',
+        component: CustomComponent,
       },
       {
         field: 'email',
@@ -34,10 +37,6 @@ export class AppComponent implements OnInit {
       {
         field: 'phone',
         header: 'Phone',
-      },
-      {
-        field: 'example',
-        header: 'Example',
       },
       {
         header: 'Address',

@@ -86,18 +86,22 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr class="tr-loader">
-            <td colspan="9999">
-              <div class="ngid-loader">
-                <div class="loadingio-spinner-ripple-ccobe1g0m4w">
-                  <div class="ldio-h748mykorlm">
-                    <div></div>
-                    <div></div>
-                  </div>
-                </div>
+          <tr
+            class="tr-not-found"
+            *ngIf="!state.isLoading && state.rows.length === 0"
+          >
+            <td colspan="9999" class="text-center">
+              <div class="not-found-wrapper">
+                <h5>Data Not Found</h5>
+                <p class="text-secondary" *ngIf="!state.keywords">
+                  Please add new data
+                </p>
+                <p class="text-secondary" *ngIf="state.keywords">
+                  Search result for: '{{ state.keywords }}' not found!
+                </p>
               </div>
             </td>
-          </tr> -->
+          </tr>
           <tr *ngFor="let row of state.rows; let i = index">
             <td>
               <div class="td-content">

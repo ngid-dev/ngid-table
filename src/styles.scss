@@ -123,6 +123,18 @@ div.ngid-table {
           &.tr-loader {
             height: 100px;
           }
+          &.tr-not-found {
+            background-color: transparent;
+            td {
+              .not-found-wrapper {
+                height: 100px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              }
+            }
+          }
           td {
             border-bottom: unset;
             white-space: nowrap;

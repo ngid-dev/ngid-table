@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { CustomComponent } from './custom-component';
+import { FormControl, FormGroup } from '@angular/forms';
+import { NgidBadgeComponent } from './ngid-badge/ngid-badge.component';
+import { TableColumn } from './ngid-table/domain/table-column';
 import { TableModel } from './ngid-table/model/table.model';
 
 @Component({
@@ -10,12 +12,26 @@ import { TableModel } from './ngid-table/model/table.model';
 })
 export class AppComponent implements OnInit {
   public tableModel: TableModel<any>;
-
+  public tablePostModel: TableModel<any>;
+  public formGroup: FormGroup;
   private moduleCode = 'app';
+  public userStatusBadgeVariant: { [key: string]: any } = {
+    SUBMITTED: 'SECONDARY',
+    WAITING: 'WARNING',
+    APPROVED: 'SUCCESS',
+  };
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {
+    this.buildFormGroup();
     this.buildTableModel();
+    this.buildTablePostModel();
+  }
+
+  private buildFormGroup(): void {
+    this.formGroup = new FormGroup({
+      status: new FormControl(null),
+    });
   }
 
   private buildTableModel(): void {
@@ -23,12 +39,10 @@ export class AppComponent implements OnInit {
       {
         field: 'name',
         header: 'Name',
-        component: CustomComponent,
       },
       {
         field: 'username',
         header: 'Username',
-        component: CustomComponent,
       },
       {
         field: 'email',
@@ -37,6 +51,18 @@ export class AppComponent implements OnInit {
       {
         field: 'phone',
         header: 'Phone',
+      },
+      {
+        field: 'status',
+        header: 'User Status',
+        component: {
+          target: NgidBadgeComponent,
+          callbacksInstance: (column: TableColumn) => {
+            const text = column.value;
+            const variant = this.userStatusBadgeVariant[text];
+            return { text, variant };
+          },
+        },
       },
       {
         header: 'Address',
@@ -75,6 +101,19 @@ export class AppComponent implements OnInit {
     ]);
   }
 
+  public buildTablePostModel(): void {
+    this.tablePostModel = new TableModel(this.moduleCode, [
+      {
+        field: 'title',
+        header: 'Title',
+      },
+      {
+        field: 'body',
+        header: 'Body',
+      },
+    ]);
+  }
+
   public handleView(record: any): void {
     console.log('INFO: Come from handleView');
     console.log(record);
@@ -88,5 +127,15 @@ export class AppComponent implements OnInit {
   public handleDelete(record: any): void {
     console.log('INFO: Come from handleDelete');
     console.log(record);
+  }
+
+  public handleFilter(): void {
+    this.tableModel.setCustomdata(this.formGroup.value);
+    this.tableModel.reload();
+  }
+
+  public handleReset(): void {
+    this.tableModel.setCustomdata(null);
+    this.tableModel.reload();
   }
 }

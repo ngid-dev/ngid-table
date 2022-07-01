@@ -1,7 +1,11 @@
 <div class="ngid-table">
   <div class="ngid-table-header">
     <div class="input-group input-search">
-      <span class="input-group-text">
+      <span
+        class="input-group-text"
+        *ngIf="headerFilterTmpl"
+        (click)="handleShowFilter()"
+      >
         <em class="fas fa-filter"></em>
       </span>
       <span class="input-group-text">
@@ -156,6 +160,7 @@
         [collectionSize]="state.pagination.totalRecord"
         [page]="state.pagination.page"
         [pageSize]="state.pagination.perPage"
+        [maxSize]="5"
         [boundaryLinks]="true"
         (pageChange)="handleChangePage($event)"
       ></ngb-pagination>

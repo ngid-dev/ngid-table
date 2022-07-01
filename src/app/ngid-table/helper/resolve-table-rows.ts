@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Service } from 'src/app/service';
 import { Table } from '../domain/table';
 import { TableColumn } from '../domain/table-column';
@@ -22,15 +22,27 @@ export const resolveTableRows = (state: Table): Promise<Array<TableRow>> => {
         }&_order=${state.sortOrder?.toLowerCase()}`;
       }
 
-      httpClient.get<Array<any>>(`${state.stringUrl}?${query}`).subscribe({
-        next: (response: Array<any>) => {
-          state.pagination.setTotalRecords(10);
-          resolve(resolveRows(state, response));
-        },
-        error: () => {
-          resolve([]);
-        },
-      });
+      if (state.model.customData) {
+        Object.keys(state.model.customData || {}).forEach((key: string) => {
+          const value = (state.model.customData as { [key: string]: any })[key];
+          if (value) {
+            query += `&${key}=${value}`;
+          }
+        });
+      }
+
+      httpClient
+        .get<any>(`${state.stringUrl}?${query}`, { observe: 'response' })
+        .subscribe({
+          next: (response: HttpResponse<Array<any>>) => {
+            const count: string | null = response.headers.get('X-Total-Count');
+            state.pagination.setTotalRecords(count ? +count : 0);
+            resolve(resolveRows(state, response.body as Array<any>));
+          },
+          error: () => {
+            resolve([]);
+          },
+        });
     } else {
       if (state.model.getRecords().length === 0) return resolve([]);
 

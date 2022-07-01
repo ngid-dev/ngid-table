@@ -5,6 +5,7 @@ export class TableModel<T> {
   private records: Array<T>;
   public requestReload: EventEmitter<void>;
   public pagination: TablePaginationModel;
+  public customData: { [key: string]: any } | null;
   constructor(
     public moduleCode: string,
     public columns: Array<TableColumnModel>
@@ -22,5 +23,9 @@ export class TableModel<T> {
 
   public reload(): void {
     this.requestReload.emit();
+  }
+
+  public setCustomdata(customData: { [key: string]: any } | null): void {
+    this.customData = customData;
   }
 }

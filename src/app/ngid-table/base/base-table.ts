@@ -22,6 +22,8 @@ export abstract class BaseTable implements OnInit {
   @Input() model: TableModel<any>;
   @Input() stringUrl: string;
   @ContentChild('actionButtons') actionButtonsTmpl: TemplateRef<any>;
+  @ContentChild('headerFilter') headerFilterTmpl: TemplateRef<any>;
+
   public state: Table;
   protected abstract onInitTable(): void;
   constructor(

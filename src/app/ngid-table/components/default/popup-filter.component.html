@@ -1,0 +1,8 @@
+<ngid-popup header="Filter Table" #ngdiPopup>
+  <ng-container
+    *ngTemplateOutlet="
+      headerFilterTmpl;
+      context: { $implicit: ngdiPopup.ngbActiveModal }
+    "
+  ></ng-container>
+</ngid-popup>

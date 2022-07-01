@@ -1,0 +1,9 @@
+<div class="modal-header" *ngIf="header">
+  <h4 class="modal-title">
+    {{ header }}
+  </h4>
+  <em class="fas fa-times" (click)="ngbActiveModal.dismiss()"></em>
+</div>
+<div class="modal-body">
+  <ng-content></ng-content>
+</div>

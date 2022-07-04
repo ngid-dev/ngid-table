@@ -69,7 +69,10 @@
             >
               <div
                 class="th-content"
-                [ngClass]="c.model.childrens ? 'justify-content-center' : ''"
+                [ngClass]="[
+                  c.model.childrens ? 'justify-content-center' : '',
+                  c | resolveClassName: 'th'
+                ]"
               >
                 <span class="th-text">{{ c.model.header }}</span>
                 <em
@@ -121,7 +124,12 @@
               </div>
             </td>
             <td *ngFor="let column of row.columns">
-              <div class="td-content" tdContent [column]="column"></div>
+              <div
+                class="td-content"
+                [ngClass]="column | resolveClassName: 'td'"
+                tdContent
+                [column]="column"
+              ></div>
             </td>
             <td class="td-action" *ngIf="actionButtonsTmpl">
               <div class="td-content">

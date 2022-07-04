@@ -102,6 +102,15 @@ div.ngid-table {
               display: flex;
               align-items: center;
               justify-content: space-between;
+              &.th-content-date {
+                .th-text {
+                  margin: 0 auto;
+                }
+              }
+              &.th-content-currency,
+              &.th-content-number {
+                justify-content: end;
+              }
               em {
                 margin-left: 0.4em;
                 color: #e6e6e6;
@@ -143,6 +152,15 @@ div.ngid-table {
               white-space: nowrap;
               button {
                 margin: 0.2rem;
+              }
+            }
+            .td-content {
+              &.td-content-currency,
+              &.td-content-number {
+                text-align: right;
+              }
+              &.td-content-date {
+                text-align: center;
               }
             }
           }

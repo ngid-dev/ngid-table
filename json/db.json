@@ -22,7 +22,10 @@
         "catchPhrase": "Multi-layered client-server neural-net",
         "bs": "harness real-time e-markets"
       },
-      "status": "APPROVED"
+      "status": "APPROVED",
+      "birthDate": 699296400000,
+      "salary": 109123513,
+      "favoriteNumber": 4
     },
     {
       "id": 2,
@@ -46,7 +49,10 @@
         "catchPhrase": "Proactive didactic contingency",
         "bs": "synergize scalable supply-chains"
       },
-      "status": "WAITING"
+      "status": "WAITING",
+      "birthDate": 699296400000,
+      "salary": 234250285,
+      "favoriteNumber": 7
     },
     {
       "id": 3,
@@ -70,7 +76,10 @@
         "catchPhrase": "Face to face bifurcated interface",
         "bs": "e-enable strategic applications"
       },
-      "status": "SUBMITTED"
+      "status": "SUBMITTED",
+      "birthDate": 699296400000,
+      "salary": 208340824,
+      "favoriteNumber": 8
     },
     {
       "id": 4,
@@ -94,7 +103,10 @@
         "catchPhrase": "Multi-tiered zero tolerance productivity",
         "bs": "transition cutting-edge web services"
       },
-      "status": "WAITING"
+      "status": "WAITING",
+      "birthDate": 699296400000,
+      "salary": 5460846043,
+      "favoriteNumber": 3
     },
     {
       "id": 5,
@@ -118,7 +130,10 @@
         "catchPhrase": "User-centric fault-tolerant solution",
         "bs": "revolutionize end-to-end systems"
       },
-      "status": "WAITING"
+      "status": "WAITING",
+      "birthDate": 699296400000,
+      "salary": 2398759275,
+      "favoriteNumber": 10
     },
     {
       "id": 6,
@@ -142,7 +157,10 @@
         "catchPhrase": "Synchronised bottom-line interface",
         "bs": "e-enable innovative applications"
       },
-      "status": "APPROVED"
+      "status": "APPROVED",
+      "birthDate": 699296400000,
+      "salary": 8348502353,
+      "favoriteNumber": 20
     },
     {
       "id": 7,
@@ -166,7 +184,10 @@
         "catchPhrase": "Configurable multimedia task-force",
         "bs": "generate enterprise e-tailers"
       },
-      "status": "APPROVED"
+      "status": "APPROVED",
+      "birthDate": 699296400000,
+      "salary": 45485038053,
+      "favoriteNumber": 88
     },
     {
       "id": 8,
@@ -190,7 +211,10 @@
         "catchPhrase": "Implemented secondary concept",
         "bs": "e-enable extensible e-tailers"
       },
-      "status": "SUBMITTED"
+      "status": "SUBMITTED",
+      "birthDate": 699296400000,
+      "salary": 2340820482,
+      "favoriteNumber": 99
     },
     {
       "id": 9,
@@ -214,7 +238,10 @@
         "catchPhrase": "Switchable contextually-based project",
         "bs": "aggregate real-time technologies"
       },
-      "status": "SUBMITTED"
+      "status": "SUBMITTED",
+      "birthDate": 699296400000,
+      "salary": 54234245,
+      "favoriteNumber": 87
     },
     {
       "id": 10,
@@ -238,7 +265,10 @@
         "catchPhrase": "Centralized empowering task-force",
         "bs": "target end-to-end models"
       },
-      "status": "APPROVED"
+      "status": "APPROVED",
+      "birthDate": 699296400000,
+      "salary": 92304802850,
+      "favoriteNumber": 54
     }
   ],
   "posts": [

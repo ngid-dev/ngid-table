@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgidBadgeComponent } from './ngid-badge/ngid-badge.component';
@@ -20,7 +19,7 @@ export class AppComponent implements OnInit {
     WAITING: 'WARNING',
     APPROVED: 'SUCCESS',
   };
-  constructor(private httpClient: HttpClient) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.buildFormGroup();
@@ -63,6 +62,28 @@ export class AppComponent implements OnInit {
             return { text, variant };
           },
         },
+      },
+      {
+        field: 'birthDate',
+        header: 'Birth Date',
+        type: {
+          name: 'date',
+          format: 'dd MMMM yyyy',
+        },
+      },
+      {
+        field: 'salary',
+        header: 'Salary',
+        type: {
+          name: 'currency',
+          display: '',
+          digitsInfo: '0.2-2',
+        },
+      },
+      {
+        field: 'favoriteNumber',
+        header: 'Favorite Number',
+        type: 'number',
       },
       {
         header: 'Address',

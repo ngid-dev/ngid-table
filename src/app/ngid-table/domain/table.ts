@@ -47,8 +47,8 @@ export class Table {
     index: number
   ): Array<Array<TableColumn>> {
     if (!results[index]) results.push([]);
-    columns.forEach((column) => {
-      results[index].push(TableColumn.create(column, null));
+    columns.forEach((column, columnIndex) => {
+      results[index].push(TableColumn.create(column, null, columnIndex + 1));
       if (column.childrens) {
         this.createColumnsList(column.childrens, results, index + 1);
       }

@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
       {
         field: 'name',
         header: 'Name',
+        plugins: 'default',
       },
       {
         field: 'username',

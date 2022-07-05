@@ -10,8 +10,9 @@ export class TableRow {
   public static create(model: TableRowModel, position: number): TableRow {
     const tableRow = new TableRow(model);
     tableRow.position = position;
-    tableRow.columns = model.columns.map((column: TableColumnModel) =>
-      TableColumn.create(column, model.record)
+    tableRow.columns = model.columns.map(
+      (column: TableColumnModel, index: number) =>
+        TableColumn.create(column, model.record, index + 1)
     );
     return tableRow;
   }

@@ -123,12 +123,13 @@
                   </div> -->
               </div>
             </td>
-            <td *ngFor="let column of row.columns">
+            <td *ngFor="let column of row.columns; let j = index">
               <div
                 class="td-content"
                 [ngClass]="column | resolveClassName: 'td'"
                 tdContent
                 [column]="column"
+                [row]="row"
               ></div>
             </td>
             <td class="td-action" *ngIf="actionButtonsTmpl">

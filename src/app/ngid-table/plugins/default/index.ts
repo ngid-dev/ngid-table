@@ -3,7 +3,7 @@ import { TablePluginModel } from '../../model/table-plugin.model';
 import { DefaultComponent } from './default.component';
 export const defaultTablePlugin: TablePluginModel = {
   name: 'default',
-  beforeCreate: (data: TablePluginDataModel): void => {
+  onCreate: (data: TablePluginDataModel): void => {
     const divElement = document.createElement('div');
     divElement.classList.add('td-content-default');
 

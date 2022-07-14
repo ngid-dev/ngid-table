@@ -1,4 +1,3 @@
-import { CurrencyPipe, DatePipe } from '@angular/common';
 import {
   Directive,
   ElementRef,
@@ -17,86 +16,28 @@ import { TablePluginService } from '../utils/table-plugin-service';
   selector: '[tdContent]',
 })
 export class TdContentDirective implements OnInit {
-  public readonly DEFAULT_DATE_FORMAT = 'dd/MM/yyyy';
-  public readonly DEFAULT_CURRENCY_DISPLAY = 'Rp ';
-
   @Input() column: TableColumn;
   @Input() row: TableRow;
 
-  private plugins: Array<{
-    plugin: TablePluginModel;
-    data: TablePluginDataModel;
-  }>;
   private tablePluginService: TablePluginService;
-
+  public plugins: Array<TablePluginModel>;
   constructor(
     private elementRef: ElementRef,
-    private viewContainerRef: ViewContainerRef,
-    private date: DatePipe,
-    private currency: CurrencyPipe
+    private viewContainerRef: ViewContainerRef
   ) {
     this.tablePluginService = TablePluginService.create();
     this.plugins = new Array();
   }
 
   ngOnInit(): void {
-    this.callPluginBeforeCreate();
-    this.callPluginCreate();
-    this.callPluginAfterCreate();
-    // this.setTextContent();
+    this.column.model.component ? this.createComponent() : this.createPlugins();
   }
 
-  private callPluginBeforeCreate(): void {
-    const { plugins } = this.column.model;
-    if (plugins) {
-      if (typeof plugins === 'string') {
-        const plugin = this.tablePluginService.pluginMap.get(plugins);
-        if (plugin) {
-          this.plugins.push({
-            plugin: plugin,
-            data: this.createTablePluginData(plugins),
-          });
-        }
-      }
-    }
-  }
-
-  private callPluginCreate(): void {
-    if (this.plugins.length === 0) {
-      const plugin = this.tablePluginService.pluginMap.get('default');
-      if (plugin) {
-        this.plugins.push({
-          plugin: plugin,
-          data: this.createTablePluginData('default'),
-        });
-      }
-    }
-    this.plugins.forEach((plugin) => {
-      if (plugin.plugin.beforeCreate) {
-        plugin.plugin.beforeCreate(plugin.data);
-      }
-    });
-  }
-
-  private callPluginAfterCreate(): void {}
-
-  private createTablePluginData(
-    plugin: AllTableColumnPluginTypeModel
-  ): TablePluginDataModel {
-    return {
-      column: this.column,
-      row: this.row,
-      element: this.elementRef.nativeElement,
-      viewContainerRef: this.viewContainerRef,
-      plugin: plugin,
-    };
-  }
-
-  private setTextContent(): void {
-    if (this.column.model.component) {
-      const { component } = this.column.model;
-      const isHasCallbacks = typeof component === 'object';
-      const componentTarget = isHasCallbacks ? component.target : component;
+  private createComponent(): void {
+    const { component } = this.column.model;
+    const isHasCallbacks = typeof component === 'object';
+    const componentTarget = isHasCallbacks ? component.target : component;
+    if (componentTarget) {
       const componentRef =
         this.viewContainerRef.createComponent(componentTarget);
 
@@ -112,47 +53,76 @@ export class TdContentDirective implements OnInit {
 
       divElement.appendChild(componentRef.location.nativeElement);
       this.elementRef.nativeElement.appendChild(divElement);
-    } else {
-      const divTdTextElement = document.createElement('div');
-      divTdTextElement.classList.add('td-text');
-      divTdTextElement.textContent = this.createValue(this.column.value) || '-';
-      this.elementRef.nativeElement.appendChild(divTdTextElement);
     }
   }
 
-  private createValue(value: any): any {
-    const { type } = this.column.model;
-    if (typeof value === 'undefined' || value === null || !type) return value;
+  private createPlugins(): void {
+    this.setPluginsState();
+    this.callPluginBeforeCreate();
+    this.callPluginCreate();
+    this.callPluginAfterCreate();
+  }
 
-    if (typeof type === 'object') {
-      if (type.name === 'date') {
-        return this.date.transform(
-          value,
-          type.format || this.DEFAULT_DATE_FORMAT,
-          type.timezone,
-          type.locale
-        );
-      } else if (type.name === 'currency') {
-        return this.currency.transform(
-          value,
-          type.currencyCode,
-          type.display || this.DEFAULT_CURRENCY_DISPLAY,
-          type.digitsInfo,
-          type.locale
-        );
-      } else {
-        return value;
+  private setPluginsState(): void {
+    const { plugins: pluginsModel } = this.column.model;
+    if (!pluginsModel) {
+      const defaultPlugin = this.tablePluginService.pluginMap.get('default');
+      if (defaultPlugin) {
+        this.plugins.push(defaultPlugin);
       }
     } else {
-      if (type === 'date') {
-        return this.date.transform(value, this.DEFAULT_DATE_FORMAT);
-      } else if (type === 'currency') {
-        return this.currency
-          .transform(value, '', this.DEFAULT_CURRENCY_DISPLAY, '0.0')
-          ?.replace(/,/g, '.');
-      } else if (type === 'number') {
-        return value;
-      }
+      const pluginModels = Array.isArray(pluginsModel)
+        ? pluginsModel
+        : [pluginsModel];
+      pluginModels.forEach((pluginModel: AllTableColumnPluginTypeModel) => {
+        const isPluginObject = typeof pluginModel === 'object';
+        let pluginName: string = isPluginObject
+          ? pluginModel.name
+          : pluginModel;
+        const plugin = this.tablePluginService.pluginMap.get(pluginName);
+        if (plugin) {
+          this.plugins.push(plugin);
+        } else {
+          this.plugins.push(pluginModel as TablePluginModel);
+        }
+      });
     }
+  }
+
+  private callPluginBeforeCreate(): void {
+    this.plugins.forEach((plugin) => {
+      if (plugin.beforeCreate) {
+        plugin.beforeCreate(this.column, this.row);
+      }
+    });
+  }
+
+  private callPluginCreate(): void {
+    this.plugins.forEach((plugin) => {
+      if (plugin.onCreate) {
+        const model = this.createTablePluginData(plugin);
+        plugin.onCreate(model);
+      }
+    });
+  }
+
+  private callPluginAfterCreate(): void {
+    this.plugins.forEach((plugin) => {
+      if (plugin.afterCreate) {
+        plugin.afterCreate(this.elementRef.nativeElement);
+      }
+    });
+  }
+
+  private createTablePluginData(
+    plugin: AllTableColumnPluginTypeModel
+  ): TablePluginDataModel {
+    return {
+      column: this.column,
+      row: this.row,
+      element: this.elementRef.nativeElement,
+      viewContainerRef: this.viewContainerRef,
+      plugin: plugin,
+    };
   }
 }

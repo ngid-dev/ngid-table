@@ -1,1 +1,30 @@
-{{ pluginData.column.value }}
+<ng-container *ngIf="!pluginData.column.model.type">
+  {{ pluginData.column.value }}
+</ng-container>
+
+<ng-container *ngIf="type">
+  <ng-container [ngSwitch]="type">
+    <span *ngSwitchCase="'date'">
+      {{
+        pluginData.column.value
+          | date
+            : datePipeModel?.format
+            : datePipeModel?.timezone
+            : datePipeModel?.locale
+      }}
+    </span>
+    <span *ngSwitchCase="'currency'">
+      {{
+        pluginData.column.value
+          | currency
+            : currencyPipeModel?.currencyCode
+            : currencyPipeModel?.display
+            : currencyPipeModel?.digitsInfo
+            : currencyPipeModel?.locale
+      }}
+    </span>
+    <span *ngSwitchDefault>
+      {{ pluginData.column.value }}
+    </span>
+  </ng-container>
+</ng-container>

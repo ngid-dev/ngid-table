@@ -1,4 +1,4 @@
-interface TypeCurrencyModel {
+export interface TypeCurrencyModel {
   name: 'currency';
   currencyCode?: string | undefined;
   display?: string | boolean | undefined;
@@ -6,7 +6,7 @@ interface TypeCurrencyModel {
   locale?: string | undefined;
 }
 
-interface TypeDateModel {
+export interface TypeDateModel {
   name: 'date';
   format?: string | undefined;
   timezone?: string | undefined;

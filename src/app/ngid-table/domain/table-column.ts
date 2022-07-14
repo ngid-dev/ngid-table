@@ -3,14 +3,18 @@ import { TableColumnModel } from '../model/table-column.model';
 export class TableColumn {
   public value: any;
   public sortable: boolean;
-  constructor(public model: TableColumnModel, public position: number) {}
+  constructor(
+    public model: TableColumnModel,
+    public position: number,
+    public record: any
+  ) {}
 
   public static create(
     model: TableColumnModel,
     record: any,
     position: number
   ): TableColumn {
-    const tableColumn = new TableColumn(model, position);
+    const tableColumn = new TableColumn(model, position, record);
     tableColumn.sortable = model.sortable !== false;
     tableColumn.value =
       record && model.field ? this.resolveRecord(record, model.field) : null;

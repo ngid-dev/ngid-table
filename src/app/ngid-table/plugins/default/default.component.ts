@@ -51,7 +51,7 @@ export class DefaultComponent implements OnInit {
       name: 'currency',
       currencyCode: currencyCode || '',
       digitsInfo: digitsInfo || '',
-      display: display || '',
+      display: display || this.DEFAULT_CURRENCY_DISPLAY,
       locale: locale || '',
     };
   }

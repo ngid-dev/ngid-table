@@ -1,0 +1,8 @@
+<a
+  [href]="hyperlinkPlugin.href || '#'"
+  (click)="handleClick($event)"
+  [target]="hyperlinkPlugin.target || '_self'"
+>
+  {{ pluginData.column.value }}
+  <em class="fas fa-external-link ms-1" *ngIf="hyperlinkPlugin.href"></em>
+</a>

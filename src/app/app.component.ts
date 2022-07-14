@@ -38,7 +38,12 @@ export class AppComponent implements OnInit {
       {
         field: 'name',
         header: 'Name',
-        plugins: 'default',
+        plugins: {
+          name: 'hyperlink',
+          onClick: (record) => {
+            console.log(record);
+          },
+        },
       },
       {
         field: 'username',

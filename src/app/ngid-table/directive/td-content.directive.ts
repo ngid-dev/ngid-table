@@ -20,7 +20,10 @@ export class TdContentDirective implements OnInit {
   @Input() row: TableRow;
 
   private tablePluginService: TablePluginService;
-  public plugins: Array<TablePluginModel>;
+  public plugins: Array<{
+    plugin: TablePluginModel;
+    pluginModel: AllTableColumnPluginTypeModel;
+  }>;
   constructor(
     private elementRef: ElementRef,
     private viewContainerRef: ViewContainerRef
@@ -68,7 +71,10 @@ export class TdContentDirective implements OnInit {
     if (!pluginsModel) {
       const defaultPlugin = this.tablePluginService.pluginMap.get('default');
       if (defaultPlugin) {
-        this.plugins.push(defaultPlugin);
+        this.plugins.push({
+          plugin: defaultPlugin,
+          pluginModel: 'default',
+        });
       }
     } else {
       const pluginModels = Array.isArray(pluginsModel)
@@ -81,9 +87,10 @@ export class TdContentDirective implements OnInit {
           : pluginModel;
         const plugin = this.tablePluginService.pluginMap.get(pluginName);
         if (plugin) {
-          this.plugins.push(plugin);
-        } else {
-          this.plugins.push(pluginModel as TablePluginModel);
+          this.plugins.push({
+            plugin: plugin,
+            pluginModel: pluginModel,
+          });
         }
       });
     }
@@ -91,25 +98,25 @@ export class TdContentDirective implements OnInit {
 
   private callPluginBeforeCreate(): void {
     this.plugins.forEach((plugin) => {
-      if (plugin.beforeCreate) {
-        plugin.beforeCreate(this.column, this.row);
+      if (plugin.plugin.beforeCreate) {
+        plugin.plugin.beforeCreate(this.column, this.row);
       }
     });
   }
 
   private callPluginCreate(): void {
     this.plugins.forEach((plugin) => {
-      if (plugin.onCreate) {
-        const model = this.createTablePluginData(plugin);
-        plugin.onCreate(model);
+      if (plugin.plugin.onCreate) {
+        const model = this.createTablePluginData(plugin.pluginModel);
+        plugin.plugin.onCreate(model);
       }
     });
   }
 
   private callPluginAfterCreate(): void {
     this.plugins.forEach((plugin) => {
-      if (plugin.afterCreate) {
-        plugin.afterCreate(this.elementRef.nativeElement);
+      if (plugin.plugin.afterCreate) {
+        plugin.plugin.afterCreate(this.elementRef.nativeElement);
       }
     });
   }

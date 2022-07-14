@@ -144,6 +144,17 @@ div.ngid-table {
               }
             }
           }
+          &:hover {
+            td {
+              .td-content {
+                .td-content-hyperlink {
+                  a {
+                    text-decoration: underline;
+                  }
+                }
+              }
+            }
+          }
           td {
             border-bottom: unset;
             white-space: nowrap;
@@ -161,6 +172,12 @@ div.ngid-table {
               }
               &.td-content-date {
                 text-align: center;
+              }
+
+              .td-content-hyperlink {
+                a {
+                  text-decoration: none;
+                }
               }
             }
           }

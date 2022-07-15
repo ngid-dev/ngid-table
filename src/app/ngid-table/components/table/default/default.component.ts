@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { NgidPopupService } from 'src/app/ngid-popup/ngid-popup.service';
-import { BaseTable, makeTableProvider } from '../../base/base-table';
-import { NgidTableService } from '../../ngid-table.service';
+import {
+  BaseTable,
+  makeTableProvider,
+} from 'src/app/ngid-table/base/base-table';
+import { NgidTableService } from 'src/app/ngid-table/ngid-table.service';
 import { PopupFilterComponent } from './popup-filter.component';
 
 @Component({

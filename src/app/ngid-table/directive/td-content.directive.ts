@@ -47,12 +47,15 @@ export class TdContentDirective implements OnInit {
       const divElement = document.createElement('div');
       divElement.classList.add('td-content-component');
 
-      Object.assign(
-        componentRef.instance,
-        isHasCallbacks
-          ? component.callbacksInstance(this.column) || { column: this.column }
-          : { column: this.column }
-      );
+      let instance: { [key: string]: any } = {};
+      if (isHasCallbacks) {
+        instance = component.callbacksInstance(this.column) || {};
+      } else {
+        const pluginData = this.createTablePluginData('default');
+        instance = { pluginData };
+      }
+
+      Object.assign(componentRef.instance, instance);
 
       divElement.appendChild(componentRef.location.nativeElement);
       this.elementRef.nativeElement.appendChild(divElement);

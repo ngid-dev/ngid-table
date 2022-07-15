@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Leanne Graham",
-      "username": "Bret 007",
+      "username": null,
       "email": "Sincere@april.biz",
       "address": {
         "street": "Kulas Light",
@@ -57,7 +57,7 @@
     {
       "id": 3,
       "name": "Clementine Bauch",
-      "username": "Samantha",
+      "username": null,
       "email": "Nathan@yesenia.net",
       "address": {
         "street": "Douglas Extension",

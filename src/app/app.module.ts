@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { CustomComponent } from './custom-component';
 import { NgidBadgeModule } from './ngid-badge/ngid-badge.module';
+import { NgidExampleModule } from './ngid-example/ngid-example.module';
 import { NgidTableModule } from './ngid-table/ngid-table.module';
 import { Service } from './service';
 
@@ -18,6 +19,7 @@ import { Service } from './service';
     HttpClientModule,
     ReactiveFormsModule,
     NgidBadgeModule,
+    NgidExampleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

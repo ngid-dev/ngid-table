@@ -19,7 +19,7 @@ interface CustomPlugin extends TablePluginModel {
 
 export interface HyperlinkPlugin {
   name: HYPERLINK;
-  href?: string;
+  createHref?: (record: any) => string;
   target?: '_blank' | '_self' | '_parent' | '_top' | 'framename';
   onClick?: (record: any) => void;
 }

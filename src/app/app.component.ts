@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgidBadgeComponent } from './ngid-badge/ngid-badge.component';
+import { NgidExampleComponent } from './ngid-example/ngid-example.component';
 import { TableColumn } from './ngid-table/domain/table-column';
 import { TableModel } from './ngid-table/model/table.model';
 
@@ -40,8 +41,8 @@ export class AppComponent implements OnInit {
         header: 'Name',
         plugins: {
           name: 'hyperlink',
-          onClick: (record) => {
-            console.log(record);
+          createHref: (record): string => {
+            return `https://www.google.com?id=${record.id}`;
           },
         },
       },
@@ -50,8 +51,9 @@ export class AppComponent implements OnInit {
         header: 'Username',
       },
       {
-        field: 'email',
         header: 'Email',
+        sortable: false,
+        component: NgidExampleComponent,
       },
       {
         field: 'phone',

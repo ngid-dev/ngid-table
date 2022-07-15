@@ -37,6 +37,17 @@ export class AppComponent implements OnInit {
   private buildTableModel(): void {
     this.tableModel = new TableModel(this.moduleCode, [
       {
+        field: 'profilePictureUrl',
+        plugins: {
+          name: 'img',
+          rounded: true,
+          onClick: (record: any) => {
+            console.log('INFO: Come from img clicked');
+            console.log(record);
+          },
+        },
+      },
+      {
         field: 'name',
         header: 'Name',
         plugins: {

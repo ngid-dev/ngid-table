@@ -7,7 +7,11 @@ export const sortTable = (
   state: Table,
   payload: { column: TableColumn }
 ): void => {
-  if (payload.column.sortable && !payload.column.model.childrens) {
+  if (
+    payload.column.model.header &&
+    payload.column.sortable &&
+    !payload.column.model.childrens
+  ) {
     const { field } = payload.column.model;
     const sortOrder: TableOrderType = state.sortField
       ? state.sortField === field

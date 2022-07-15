@@ -1,0 +1,12 @@
+<table-value-wrapper [value]="pluginData.column.value">
+  <img
+    [src]="pluginData.column.value"
+    alt=""
+    (click)="handleClick()"
+    [width]="attr.width"
+    [height]="attr.height"
+    [alt]="attr.alt"
+    (error)="onError($event)"
+  />
+  <span *ngIf="isBrokenImage">No <br />image</span>
+</table-value-wrapper>

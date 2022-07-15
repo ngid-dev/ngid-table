@@ -55,7 +55,9 @@
             <!-- <th class="sortable sort-asc"> -->
             <th
               [ngClass]="[
-                c.sortable && !c.model.childrens ? 'sortable' : '',
+                c.model.header && c.sortable && !c.model.childrens
+                  ? 'sortable'
+                  : '',
                 state.sortField === c.model.field && state.sortOrder
                   ? 'sort-' + (state.sortOrder | lowercase)
                   : ''
@@ -77,7 +79,7 @@
                 <span class="th-text">{{ c.model.header }}</span>
                 <em
                   class="fas fa-sort"
-                  *ngIf="c.sortable && !c.model.childrens"
+                  *ngIf="c.model.header && c.sortable && !c.model.childrens"
                 ></em>
               </div>
             </th>

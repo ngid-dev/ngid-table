@@ -23,6 +23,7 @@ export abstract class BaseTable implements OnInit {
   @Input() stringUrl: string;
   @ContentChild('actionButtons') actionButtonsTmpl: TemplateRef<any>;
   @ContentChild('headerFilter') headerFilterTmpl: TemplateRef<any>;
+  @ContentChild('headerButtons') headerButtonsTmpl: TemplateRef<any>;
 
   public state: Table;
   protected abstract onInitTable(): void;

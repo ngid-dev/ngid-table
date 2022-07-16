@@ -8,11 +8,19 @@ import { TableColumnType } from '../type/table-column.type';
 export class ResolveClassName implements PipeTransform {
   transform(column: TableColumn, targetAttrName: 'td' | 'th'): string {
     const { type } = column.model;
-    if (!type) return '';
-    return this.createClassName(
-      targetAttrName,
-      typeof type === 'object' ? type.name : type
-    );
+    let className = '';
+    if (column.model.customClass) {
+      className += ` ${column.model.customClass} `;
+    }
+
+    if (type) {
+      className += this.createClassName(
+        targetAttrName,
+        typeof type === 'object' ? type.name : type
+      );
+    }
+
+    return className;
   }
 
   private createClassName(

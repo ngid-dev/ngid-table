@@ -101,8 +101,10 @@ export class TdContentDirective implements OnInit {
 
   private callPluginBeforeCreate(): void {
     this.plugins.forEach((plugin) => {
-      if (plugin.plugin.beforeCreate) {
-        plugin.plugin.beforeCreate(this.column, this.row);
+      const beforeCreate =
+        (plugin.pluginModel as any).beforeCreate || plugin.plugin.beforeCreate;
+      if (beforeCreate) {
+        beforeCreate(this.column, this.row);
       }
     });
   }
@@ -118,8 +120,10 @@ export class TdContentDirective implements OnInit {
 
   private callPluginAfterCreate(): void {
     this.plugins.forEach((plugin) => {
-      if (plugin.plugin.afterCreate) {
-        plugin.plugin.afterCreate(this.elementRef.nativeElement);
+      const afterCreate =
+        (plugin.pluginModel as any).afterCreate || plugin.plugin.afterCreate;
+      if (afterCreate) {
+        afterCreate(this.elementRef.nativeElement);
       }
     });
   }

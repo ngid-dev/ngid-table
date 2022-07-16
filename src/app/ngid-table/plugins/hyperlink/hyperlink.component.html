@@ -1,8 +1,15 @@
 <table-value-wrapper [value]="pluginData.column.value">
   <a
-    [href]="href || '#'"
+    [href]="attribute.href || '#'"
     (click)="handleClick($event)"
-    [target]="hyperlinkPlugin.target || '_self'"
+    [target]="attribute.target || '_blank'"
+    [type]="attribute.type || ''"
+    [rel]="attribute.rel || ''"
+    [attr.referrerpolicy]="attribute.referrerpolicy || 'no-referrer'"
+    [ping]="attribute.ping || ''"
+    [attr.media]="attribute.media || ''"
+    [hreflang]="attribute.hreflang || 'id'"
+    [download]="attribute.download || ''"
   >
     {{ pluginData.column.value }}
     <em class="fas fa-external-link ms-1" *ngIf="href"></em>

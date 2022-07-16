@@ -10,6 +10,7 @@ export class TableColumnModel {
   childrens?: Array<TableColumnModel>;
   sortable?: boolean;
   type?: TableColumnType | AllTableColumnTypeModel;
+  customClass?: string;
   plugins?:
     | AllTableColumnPluginTypeModel
     | Array<AllTableColumnPluginTypeModel>;

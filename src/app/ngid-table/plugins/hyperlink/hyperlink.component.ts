@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AnchorAttributeModel } from '../../model/anchor-attribute.model';
 import { TablePluginDataModel } from '../../model/table-plugin-data.model';
 import { HyperlinkPlugin } from '../../model/table-plugin-type.model';
 
@@ -10,10 +11,11 @@ export class HyperlinkComponent implements OnInit {
 
   public hyperlinkPlugin: HyperlinkPlugin;
   public href: string;
+  public attribute: AnchorAttributeModel;
 
   ngOnInit(): void {
     this.setInitializationState();
-    this.setInitializationHref();
+    this.createAttributeState();
   }
 
   private setInitializationState(): void {
@@ -23,9 +25,9 @@ export class HyperlinkComponent implements OnInit {
       : (this.pluginData.plugin as HyperlinkPlugin);
   }
 
-  private setInitializationHref(): void {
-    if (this.hyperlinkPlugin.createHref) {
-      this.href = this.hyperlinkPlugin.createHref(
+  private createAttributeState(): void {
+    if (this.hyperlinkPlugin.createAttribute) {
+      this.attribute = this.hyperlinkPlugin.createAttribute(
         this.pluginData.column.record
       );
     }

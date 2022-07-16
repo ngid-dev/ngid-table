@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NgidBadgeComponent } from './ngid-badge/ngid-badge.component';
 import { NgidExampleComponent } from './ngid-example/ngid-example.component';
 import { TableColumn } from './ngid-table/domain/table-column';
+import { AnchorAttributeModel } from './ngid-table/model/anchor-attribute.model';
 import { TableModel } from './ngid-table/model/table.model';
 
 @Component({
@@ -52,18 +53,36 @@ export class AppComponent implements OnInit {
         header: 'Name',
         plugins: {
           name: 'hyperlink',
-          createHref: (record): string => {
-            return `https://www.google.com?id=${record.id}`;
+          customClass: 'hero-class-name',
+          createAttribute: (record): AnchorAttributeModel => {
+            return {
+              href: `https://www.google.com?id=${record.id}`,
+              target: '_self',
+            };
           },
         },
       },
       {
         field: 'username',
         header: 'Username',
+        customClass: 'text-end justify-content-end',
+        plugins: {
+          name: 'default',
+          beforeCreate: (column: TableColumn): void => {
+            column.value = column.record.username + ' CustomValue';
+          },
+          afterCreate: (element: HTMLElement) => {
+            const tdContentDefaultElement =
+              element.getElementsByClassName('td-content-default')[0];
+            if (tdContentDefaultElement) {
+              tdContentDefaultElement.classList.add('bg-warning', 'text-white');
+            }
+          },
+        },
       },
       {
+        field: 'email',
         header: 'Email',
-        sortable: false,
         component: NgidExampleComponent,
       },
       {

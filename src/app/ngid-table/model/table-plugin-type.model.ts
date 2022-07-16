@@ -1,3 +1,6 @@
+import { TableColumn } from '../domain/table-column';
+import { TableRow } from '../domain/table-row';
+import { AnchorAttributeModel } from './anchor-attribute.model';
 import { ImgAttributeModel } from './img-attribute.model';
 import { TablePluginModel } from './table-plugin.model';
 
@@ -12,15 +15,20 @@ export type AvailableTablePluginName =
   | IMG_PLUGIN
   | HYPERLINK_PLUGIN;
 
-interface DefaultPlugin {
+export interface DefaultPlugin {
   name: DEFAULT_PLUGIN;
+  customClass?: string;
+  beforeCreate?: (column: TableColumn, row?: TableRow) => void;
+  afterCreate?: (tdContentElement: HTMLElement) => void;
 }
 
 export interface HyperlinkPlugin {
   name: HYPERLINK_PLUGIN;
-  createHref?: (record: any) => string;
-  target?: '_blank' | '_self' | '_parent' | '_top' | 'framename';
   onClick?: (record: any) => void;
+  createAttribute?: (record: any) => AnchorAttributeModel;
+  customClass?: string;
+  beforeCreate?: (column: TableColumn, row?: TableRow) => void;
+  afterCreate?: (tdContentElement: HTMLElement) => void;
 }
 
 export interface ImgPlugin {
@@ -28,6 +36,9 @@ export interface ImgPlugin {
   onClick?: (record: any) => void;
   rounded?: boolean;
   createAttribute?: (record: any) => ImgAttributeModel;
+  customClass?: string;
+  beforeCreate?: (column: TableColumn, row?: TableRow) => void;
+  afterCreate?: (tdContentElement: HTMLElement) => void;
 }
 
 interface CustomPlugin extends TablePluginModel {

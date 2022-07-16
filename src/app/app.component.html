@@ -1,11 +1,6 @@
 <div class="container p-4">
   <h1>Welcome to ngid-table Tutorial</h1>
   <h4>Create resuable table component with Angular</h4>
-  <button class="btn btn-primary">
-    <em class="fas fa-plus"></em>
-    Add
-  </button>
-  <br />
   <br />
   <ngid-table [model]="tableModel" stringUrl="http://localhost:3000/users">
     <ng-template #headerFilter let-modal>
@@ -38,6 +33,13 @@
           </button>
         </div>
       </form>
+    </ng-template>
+
+    <ng-template #headerButtons>
+      <button class="btn btn-primary">
+        <em class="fas fa-plus"></em>
+        Add
+      </button>
     </ng-template>
 
     <ng-template #actionButtons let-record>

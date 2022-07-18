@@ -41,16 +41,13 @@
               *ngIf="i === 0"
             >
               <div class="th-content">
-                <span class="th-text"> No </span>
-                <!-- <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      [id]="0"
-                      [indeterminate]="true"
-                    />
-                    <label class="form-check-label" [for]="0"> </label>
-                  </div> -->
+                <!-- <span class="th-text"> No </span>
+                    [indeterminate]="true"
+                -->
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [id]="0" />
+                  <label class="form-check-label" [for]="0"> </label>
+                </div>
               </div>
             </th>
             <!-- <th class="sortable sort-asc"> -->
@@ -115,15 +112,17 @@
           <tr *ngFor="let row of state.rows; let i = index">
             <td>
               <div class="td-content">
-                {{ row.position }}
-                <!-- <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      [id]="item + 1"
-                    />
-                    <label class="form-check-label" [for]="item + 1"> </label>
-                  </div> -->
+                <!-- {{ row.position }} -->
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [id]="row.position"
+                    [checked]="row.isSelected"
+                    (change)="handleSelectRow($event, row)"
+                  />
+                  <label class="form-check-label" [for]="row.position"> </label>
+                </div>
               </div>
             </td>
             <td *ngFor="let column of row.columns; let j = index">

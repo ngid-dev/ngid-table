@@ -111,10 +111,41 @@ const orderRecords = (
 
 const resolveRows = (state: Table, records: Array<any>): Array<TableRow> => {
   const startRow = (state.pagination.page - 1) * state.pagination.perPage;
-  return records.map((record, index: number) =>
-    TableRow.create(
+  return records.map((record, index: number) => {
+    let isSelected = getIsSelectedRecord(state, record);
+    const row = TableRow.create(
       { record: record, columns: state.columnsModel },
-      index + 1 + startRow
-    )
-  );
+      index + 1 + startRow,
+      isSelected
+    );
+
+    if (isSelected) {
+      state.selectedRow.addToSelecedRow(row);
+    }
+
+    return row;
+  });
+};
+
+const getIsSelectedRecord = (state: Table, record: any): boolean => {
+  if (
+    state.model.options &&
+    state.model.options.selectedRow &&
+    state.model.options.selectedRow.compareWith
+  ) {
+    return (
+      state.model.selectedRecords.findIndex(
+        (selectedRecord) =>
+          (state.model &&
+            state.model.options &&
+            state.model.options.selectedRow &&
+            state.model.options.selectedRow.compareWith(
+              selectedRecord,
+              record
+            )) ||
+          false
+      ) !== -1
+    );
+  }
+  return false;
 };

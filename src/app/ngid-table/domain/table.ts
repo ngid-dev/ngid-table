@@ -1,6 +1,7 @@
 import { TableColumnModel } from '../model/table-column.model';
 import { TableModel } from '../model/table.model';
 import { TableOrderType } from '../type/table-order.type';
+import { SelectedRow } from './selected-row';
 import { TableColumn } from './table-column';
 import { TablePagination } from './table-pagination';
 import { TableRow } from './table-row';
@@ -16,6 +17,7 @@ export class Table {
   public sortOrder: TableOrderType;
   public pagination: TablePagination;
   public isServerSide: boolean;
+  public selectedRow: SelectedRow;
   constructor(public model: TableModel<any>, public stringUrl: string) {}
 
   public setStateLoading(): void {
@@ -30,6 +32,10 @@ export class Table {
     this.rows = rows;
   }
 
+  public reset(): void {
+    this.selectedRow.reset();
+  }
+
   public static create(model: TableModel<any>, stringUrl: string): Table {
     const table = new Table(model, stringUrl);
     table.rows = new Array();
@@ -38,6 +44,9 @@ export class Table {
     table.columnsList = this.createColumnsList(model.columns, [], 0);
     table.columnsModel = this.createColumnsModel(model.columns, []);
     table.pagination = TablePagination.create(model.pagination);
+    table.selectedRow = SelectedRow.create(
+      model.options?.selectedRow?.compareWith
+    );
     return table;
   }
 

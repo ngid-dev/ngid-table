@@ -4,6 +4,7 @@ import { changePerPageTableAction } from './change-per-page-table.action';
 import { initTableAction } from './init-table.action';
 import { reloadTableAction } from './reload-table.action';
 import { searchTableAction } from './search-table.action';
+import { selectRowTable } from './select-row-table.action';
 import { sortTable } from './sort-table.action';
 import * as tableAction from './table.action';
 
@@ -26,6 +27,9 @@ export const dispatchTableAction = (
       break;
     case tableAction.SORT_TABLE:
       sortTable(state, action.payload);
+      break;
+    case tableAction.SELECT_ROW:
+      selectRowTable(state, action.payload);
       break;
     case tableAction.CHANGE_PAGE_TABLE:
       changePageTableAction(state, action.payload);

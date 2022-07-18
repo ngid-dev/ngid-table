@@ -5,10 +5,14 @@ import { TableColumn } from './table-column';
 export class TableRow {
   public columns: Array<TableColumn>;
   public position: number;
-  constructor(public model: TableRowModel) {}
+  constructor(public model: TableRowModel, public isSelected: boolean) {}
 
-  public static create(model: TableRowModel, position: number): TableRow {
-    const tableRow = new TableRow(model);
+  public static create(
+    model: TableRowModel,
+    position: number,
+    isSelected: boolean = false
+  ): TableRow {
+    const tableRow = new TableRow(model, isSelected);
     tableRow.position = position;
     tableRow.columns = model.columns.map(
       (column: TableColumnModel, index: number) =>

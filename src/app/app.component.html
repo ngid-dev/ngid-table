@@ -1,6 +1,10 @@
 <div class="container p-4">
   <h1>Welcome to ngid-table Tutorial</h1>
   <h4>Create resuable table component with Angular</h4>
+  <button class="btn btn-primary" (click)="handleRemoveSelectedRow()">
+    Remove Selected Rows
+  </button>
+  <br />
   <br />
   <ngid-table [model]="tableModel" stringUrl="http://localhost:3000/users">
     <ng-template #headerFilter let-modal>
@@ -56,8 +60,8 @@
   </ngid-table>
   <br />
   <br />
-  <!-- <ngid-table
+  <ngid-table
     [model]="tablePostModel"
     stringUrl="http://localhost:3000/posts"
-  ></ngid-table> -->
+  ></ngid-table>
 </div>

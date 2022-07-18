@@ -1,4 +1,5 @@
 import { TableColumn } from '../domain/table-column';
+import { TableRow } from '../domain/table-row';
 import { IAction } from '../interface/action.interface';
 
 export const INIT_TABLE = `[ Ngid Table ]: Initialization table`;
@@ -6,6 +7,7 @@ export const RELOAD_TABLE = `[ Ngid Table ]: Reload table`;
 export const SEARCH_TABLE = `[ Ngid Table ]: Search table`;
 export const CHANGE_PER_PAGE_TABLE = `[ Ngid Table ]: Change per page table`;
 export const SORT_TABLE = `[ Ngid Table ]: Sort table`;
+export const SELECT_ROW = `[ Ngid Table ]: Select row table`;
 export const CHANGE_PAGE_TABLE = `[ Ngid Table ]: Change page table`;
 
 export class InitTable implements IAction<void> {
@@ -31,6 +33,13 @@ export class SortTable implements IAction<{ column: TableColumn }> {
   constructor(public payload: { column: TableColumn }) {}
 }
 
+export class SelectRowTable
+  implements IAction<{ row: TableRow; isChecked: boolean }>
+{
+  public readonly type = SELECT_ROW;
+  constructor(public payload: { row: TableRow; isChecked: boolean }) {}
+}
+
 export class ChangePageTable implements IAction<{ page: number }> {
   public readonly type = CHANGE_PAGE_TABLE;
   constructor(public payload: { page: number }) {}
@@ -42,4 +51,5 @@ export type AllTableAction =
   | SearchTable
   | ChangeMaxRowTable
   | SortTable
+  | SelectRowTable
   | ChangePageTable;

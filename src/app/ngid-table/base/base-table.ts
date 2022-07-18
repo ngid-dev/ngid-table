@@ -10,6 +10,7 @@ import {
 import * as tableAction from '../actions/table.action';
 import { Table } from '../domain/table';
 import { TableColumn } from '../domain/table-column';
+import { TableRow } from '../domain/table-row';
 import { TableModel } from '../model/table.model';
 import { NgidTableService } from '../ngid-table.service';
 
@@ -36,6 +37,7 @@ export abstract class BaseTable implements OnInit {
     this.setInitializationState();
     this.initTable();
     this.listenRequestReload();
+    this.listenRequestReset();
     this.onInitTable();
   }
 
@@ -49,6 +51,13 @@ export abstract class BaseTable implements OnInit {
 
   private listenRequestReload(): void {
     this.model.requestReload.subscribe(() => {
+      this.tableService.dispatch(new tableAction.ReloadTable());
+    });
+  }
+
+  private listenRequestReset(): void {
+    this.model.requestReset.subscribe(() => {
+      this.state.reset();
       this.tableService.dispatch(new tableAction.ReloadTable());
     });
   }
@@ -67,6 +76,14 @@ export abstract class BaseTable implements OnInit {
 
   public handleSort(column: TableColumn): void {
     this.tableService.dispatch(new tableAction.SortTable({ column }));
+  }
+
+  public handleSelectRow(event: Event, row: TableRow): void {
+    const inputElement = event.target as HTMLInputElement;
+    const isChecked = inputElement.checked;
+    this.tableService.dispatch(
+      new tableAction.SelectRowTable({ row, isChecked })
+    );
   }
 
   public handleChangePage(page: number): void {
